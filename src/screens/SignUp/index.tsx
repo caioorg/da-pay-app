@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { Center, Text, VStack, HStack, Pressable, IconButton } from 'native-base'
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
-import { Button } from '../../components/Button'
-import Input from '../../components/Input'
-import Illustration from '../../assets/sign-up.svg'
+import Button from '@components/Button'
+import Input from '@components/Input'
+import Illustration from '@assets/sign-up.svg'
 
 const SignUp = () => {
   const { navigate } = useNavigation()

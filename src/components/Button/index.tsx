@@ -5,7 +5,7 @@ interface Props extends IButtonProps {
   type?: 'primary' | 'secondary'
 }
 
-export const Button = ({ title, type = 'primary', ...rest }: Props) => {
+const Button = ({ title, type = 'primary', ...rest }: Props) => {
   const BG_COLOR = { primary: 'green.500', secondary: 'yellow.500' }
   const PRESS_COLOR = { primary: 'green.600', secondary: 'yellow.400' }
   const COLOR = { primary: 'white', secondary: 'black.500' }
@@ -28,3 +28,5 @@ export const Button = ({ title, type = 'primary', ...rest }: Props) => {
     </ButtonNativeBase>
   )
 }
+
+export default Button
