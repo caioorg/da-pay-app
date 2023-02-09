@@ -11,9 +11,18 @@ export const ThemeNative = extendTheme({
     black: {
       500: '#111827'
     },
+    blue: {
+      500: '#110777',
+      600: '#0f0760'
+    },
+    pink: {
+      500: '#8E0CFF',
+      600: '#7504d8'
+    },
     gray: {
       500: '#F5F5F5',
-      600: '#CBCBCB'
+      600: '#CBCBCB',
+      700: '#343A40'
     }
   },
   fonts: {

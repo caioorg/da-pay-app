@@ -6,9 +6,9 @@ interface Props extends IButtonProps {
 }
 
 const Button = ({ title, type = 'primary', ...rest }: Props) => {
-  const BG_COLOR = { primary: 'green.500', secondary: 'yellow.500' }
-  const PRESS_COLOR = { primary: 'green.600', secondary: 'yellow.400' }
-  const COLOR = { primary: 'white', secondary: 'black.500' }
+  const BG_COLOR = { primary: 'blue.500', secondary: 'pink.500' }
+  const PRESS_COLOR = { primary: 'blue.600', secondary: 'pink.600' }
+  const COLOR = { primary: 'white', secondary: 'white' }
 
   return (
     <ButtonNativeBase

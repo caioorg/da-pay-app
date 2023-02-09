@@ -8,7 +8,7 @@ export const Routes = () => {
   const { isAuthenticated } = useAuth()
 
   return (
-    <Box flex={1}>
+    <Box flex={1} bg='white'>
       <NavigationContainer>
         {isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
       </NavigationContainer>
