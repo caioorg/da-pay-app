@@ -6,6 +6,9 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "extra": {
+        "baseURL": "https://da-pay-api.vercel.app"
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

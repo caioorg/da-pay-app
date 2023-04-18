@@ -11,7 +11,7 @@ export const PublicRoutes = () => {
   }
 
   return (
-    <Navigator screenOptions={screenOptions} initialRouteName='signup'>
+    <Navigator screenOptions={screenOptions} initialRouteName='signin'>
       <Screen name='signin' component={SignIn} options={{ tabBarButton: () => null }} />
       <Screen name='signup' component={SignUp} options={{ tabBarButton: () => null }} />
     </Navigator>
