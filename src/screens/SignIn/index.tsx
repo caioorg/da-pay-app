@@ -3,14 +3,18 @@ import { Center, Text, VStack, HStack, Pressable, IconButton } from "native-base
 import { FontAwesome } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
+import { useRecoilValue } from 'recoil'
 import Button from "@app/common/components/Button";
 import Input from "@app/common/components/Input";
 import IAuth from "@app/common/contracts/auth";
 import { useAuth } from "@contexts/AuthContext";
+import { showFullLoadingState } from "@app/common/helpers/globalState";
+import Loading from "@app/common/components/Loading";
 
 const SignIn = () => {
     const { navigate } = useNavigation();
     const { signIn } = useAuth()
+    const showFullLoading = useRecoilValue(showFullLoadingState)
     const { control, handleSubmit } = useForm<IAuth.SignIn>();
     const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
 
@@ -20,6 +24,7 @@ const SignIn = () => {
 
     return (
         <VStack space={4} w="full" h="full" bg="white" justifyContent="center" p={7} >
+            {showFullLoading.value && <Loading />}
             <Center>
                 <Text fontFamily="heading" fontSize="3xl" color="black.500" mb={5}>
                     Sign In

@@ -5,12 +5,12 @@ import { PublicRoutes } from './public.routes'
 import { useAuth } from '@contexts/AuthContext'
 
 export const Routes = () => {
-  const { isAuthenticated } = useAuth()
+  const { user } = useAuth()
 
   return (
     <Box flex={1} bg='white'>
       <NavigationContainer>
-        {isAuthenticated ? <PrivateRoutes /> : <PublicRoutes />}
+        {user?.id ? <PrivateRoutes /> : <PublicRoutes />}
       </NavigationContainer>
     </Box>
   )

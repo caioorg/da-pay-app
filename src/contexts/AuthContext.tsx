@@ -1,22 +1,21 @@
-import IAuth from "@app/common/contracts/auth";
-import AuthService from "@app/services/auth";
 import {
     createContext,
     ReactNode,
     useCallback,
     useContext,
     useState,
+    useEffect
 } from "react";
+import { useSetRecoilState } from "recoil";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import IAuth from "@app/common/contracts/auth";
+import { showFullLoadingState } from "@app/common/helpers/globalState";
+import api from "@app/common/config/api";
+import AuthService from "@app/services/auth";
 
-interface UserProps {
-    email: string;
-    name: string;
-}
-
-export interface AuthContextDataProps {
-    user: UserProps;
+interface AuthContextDataProps {
+    user: IAuth.Info | null;
     signIn: (data: IAuth.SignIn) => void;
-    isAuthenticated: boolean;
     signUp: () => void;
     logout: () => void;
 }
@@ -24,21 +23,45 @@ export interface AuthContextDataProps {
 export const AuthContext = createContext({} as AuthContextDataProps);
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-    const [user, setUser] = useState<UserProps>({} as UserProps);
+    const setFullLoading = useSetRecoilState(showFullLoadingState);
+    const [user, setUser] = useState({} as IAuth.Info | null);
 
-    const signIn = useCallback(async (data: IAuth.SignIn) => {
-        const result = await AuthService.signIn(data)
+    useEffect(() => {
+        (async () => {
+            const storage = await AsyncStorage.getItem('@DP:User')
+            if(storage) setUser(JSON.parse(storage))
+        })()
+    }, [])
 
-        console.log({ result })
+    const signIn = useCallback(async ({ email, password }: IAuth.SignIn) => {
+        try {
+            setFullLoading({ value: true });
+            const result = await AuthService.signIn({ email, password });
+
+            const { data, ...rest } = result as { data: IAuth.Info };
+            setUser(data);
+            api.defaults.headers.common["Authorization"] = `Bearer ${
+                (rest as { accessToken: string }).accessToken
+            }`;
+            await AsyncStorage.setItem("@DP:User", JSON.stringify(data));
+            await AsyncStorage.setItem("@DP:Token", JSON.stringify(rest));
+        } catch (error) {
+            console.log("deu erro");
+            // TODO: toast de error
+        } finally {
+            setFullLoading({ value: false });
+        }
     }, []);
 
     const signUp = useCallback(() => {}, []);
 
-    const logout = useCallback(() => {}, []);
+    const logout = useCallback(async () => {
+        await AsyncStorage.clear()
+        setUser(null)
+    }, []);
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signIn, signUp, logout, user }}>
+        <AuthContext.Provider value={{ signIn, signUp, logout, user }}>
             {children}
         </AuthContext.Provider>
     );
