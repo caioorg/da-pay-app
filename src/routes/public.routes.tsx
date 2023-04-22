@@ -1,19 +1,12 @@
-import { createBottomTabNavigator, BottomTabNavigationOptions } from '@react-navigation/bottom-tabs'
-import { SignIn, SignUp } from '../screens'
-const { Navigator, Screen } = createBottomTabNavigator()
+import { createStackNavigator } from "@react-navigation/stack";
+import { SignIn, SignUp } from "../screens";
+const Stack = createStackNavigator();
 
 export const PublicRoutes = () => {
-  const screenOptions: BottomTabNavigationOptions = {
-    headerShown: false,
-    tabBarStyle: {
-      display: 'none'
-    },
-  }
-
-  return (
-    <Navigator screenOptions={screenOptions} initialRouteName='signin'>
-      <Screen name='signin' component={SignIn} options={{ tabBarButton: () => null }} />
-      <Screen name='signup' component={SignUp} options={{ tabBarButton: () => null }} />
-    </Navigator>
-  )
+    return (
+        <Stack.Navigator initialRouteName="signin" screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="signin" component={SignIn} />
+            <Stack.Screen name="signup" component={SignUp} />
+        </Stack.Navigator>
+    );
 }

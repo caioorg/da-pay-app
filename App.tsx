@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import { NativeBaseProvider, StatusBar } from "native-base";
 import { RecoilRoot } from "recoil";
 import {
